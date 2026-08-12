@@ -251,7 +251,7 @@
       });
     }
 
-    gsap.utils.toArray('.hero-kicker, .hero-title, .hero-lead, .hero-trust, .hero-actions, .book-card').forEach(function (el, i) {
+    gsap.utils.toArray('.hero-kicker, .hero-title, .hero-lead, .hero-trust, .hero-actions').forEach(function (el, i) {
       gsap.from(el, {
         y: 28,
         opacity: 0,
