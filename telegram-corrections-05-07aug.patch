@@ -1,0 +1,344 @@
+diff --git a/assets/css/site.css b/assets/css/site.css
+index eb370b3..807631d 100644
+--- a/assets/css/site.css
++++ b/assets/css/site.css
+@@ -27,9 +27,9 @@
+   --section-gap:clamp(48px,8vw,100px);
+   --container-pad-x:clamp(24px,2.5vw,40px);
+   --container-pad-y:clamp(48px,6vh,100px);
+-  --font-display:'Golos Text',system-ui,sans-serif;
+-  --font-body:'Golos Text',system-ui,sans-serif;
+-  --font-quote:'PT Serif',Georgia,serif;
++  --font-display:'Arial','Golos Text',system-ui,sans-serif;
++  --font-body:'Arial','Golos Text',system-ui,sans-serif;
++  --font-quote:'Arial','Golos Text',system-ui,sans-serif;
+   --h1:clamp(44px,4.6vw,60px);
+   --h2:clamp(36px,3.6vw,48px);
+   --h3:clamp(24px,2vw,28px);
+@@ -101,7 +101,7 @@ body{padding:24px;display:flex;flex-direction:column;gap:24px;min-height:100dvh;
+ /* —— Header (light) —— */
+ #site-header{
+   position:fixed;top:24px;left:24px;right:24px;min-height:80px;
+-  background:rgba(255,255,255,.96);
++  background:var(--surface);
+   border-radius:20px;z-index:1000;
+   display:flex;align-items:center;justify-content:space-between;
+   padding:10px 22px 10px 28px;gap:16px;
+@@ -171,9 +171,20 @@ body{padding:24px;display:flex;flex-direction:column;gap:24px;min-height:100dvh;
+   font-size:16px;color:var(--ink-soft);text-decoration:none;font-weight:500;white-space:nowrap;
+ }
+ .header-link:hover{color:var(--accent);}
++/* Правка 07.08: кнопки-действия с иконками + мессенджеры — всегда видимы в шапке */
++.header-quick{display:flex;align-items:center;gap:4px;}
++.header-quick a{
++  display:flex;flex-direction:column;align-items:center;gap:2px;
++  font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.02em;
++  color:var(--ink-soft);text-decoration:none;padding:6px 8px;border-radius:10px;
++}
++.header-quick a:hover{color:var(--accent);background:rgba(191,0,60,.06);}
++.header-quick img{width:20px;height:20px;display:block;}
++.header-socials--top{display:flex;align-items:center;gap:6px;}
++
+ /* legacy theme classes: always light */
+ #site-header.theme-light,
+-#site-header.theme-dark{background:rgba(255,255,255,.96);}
++#site-header.theme-dark{background:var(--surface);}
+ #site-header.theme-dark .logo,
+ #site-header.theme-light .logo{color:var(--accent);}
+ 
+@@ -246,8 +257,8 @@ body{padding:24px;display:flex;flex-direction:column;gap:24px;min-height:100dvh;
+ .hero-kicker{display:inline-flex;align-items:center;gap:10px;color:var(--muted);font-size:18px;}
+ .hero-title{
+   font-family:var(--font-display);
+-  font-size:var(--h1);font-weight:800;line-height:1.12;color:var(--ink);max-width:14ch;
+-  letter-spacing:.01em;text-transform:none;
++  font-size:clamp(30px,3vw,42px);font-weight:800;line-height:1.22;color:var(--ink);max-width:520px;
++  letter-spacing:0;text-transform:none;
+ }
+ .hero-lead{color:var(--ink-soft);font-size:var(--body);line-height:var(--lh);max-width:36em;}
+ .hero-trust{color:var(--muted);font-size:16px;}
+@@ -267,7 +278,8 @@ a.book-card{
+ a.book-card:hover{transform:translateY(-2px);}
+ a.book-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+ .book-card img{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:90px;height:132px;border-radius:6px;object-fit:cover;}
+-.book-card .book-title{color:var(--ink);font-size:var(--h3);line-height:1.25;margin-bottom:8px;padding-right:8px;}
++.book-card .book-title{color:var(--accent);font-size:var(--h3);font-weight:800;text-transform:uppercase;letter-spacing:.02em;line-height:1.25;margin-bottom:8px;padding-right:8px;}
++.book-title-accent{color:var(--accent);text-transform:uppercase;letter-spacing:.02em;}
+ .book-card .book-desc{color:var(--ink-soft);font-size:16px;line-height:1.45;padding-right:8px;}
+ .book-card-cta{
+   position:absolute;left:14px;top:50%;transform:translateY(-50%);width:90px;height:132px;border-radius:6px;
+@@ -416,24 +428,30 @@ a.book-card:hover .book-card-cta,a.book-card:focus-visible .book-card-cta{opacit
+ .service-card p{color:var(--ink-soft);font-size:20px;line-height:1.45;margin:0;max-width:18em;}
+ .service-step{
+   position:absolute;top:12px;left:18px;
+-  width:24px;height:24px;border-radius:50%;
+-  background:rgba(255,255,255,.55);color:var(--accent);
+-  font-size:14px;font-weight:600;
++  width:28px;height:28px;border-radius:50%;
++  background:var(--accent);color:#fff;
++  font-size:14px;font-weight:700;
+   display:flex;align-items:center;justify-content:center;
+ }
+-.service-card--tone-1{background:#F3D5DE;}
+-.service-card--tone-2{background:#EBB6C5;}
+-.service-card--tone-3{background:#E090A8;}
+-.service-card--tone-4{background:#D06686;}
+-.service-card--tone-5{background:#BF003C;color:#fff;}
+-.service-card--tone-5 h3,.service-card--tone-5 p{color:#fff;}
+-.service-card--tone-5 .service-step{background:rgba(255,255,255,.2);color:#fff;}
+-.service-card--tone-6{background:#8A002C;color:#fff;}
+-.service-card--tone-6 h3,.service-card--tone-6 p{color:#fff;}
+-.service-card--tone-6 .service-step{background:rgba(255,255,255,.2);color:#fff;}
++/* 06.08 правка: фон белый/светло-серый (под финансовый сектор), акцент — красный только на номерах этапов */
++.service-card--tone-1,.service-card--tone-2,.service-card--tone-3,
++.service-card--tone-4,.service-card--tone-5,.service-card--tone-6{
++  background:var(--surface-2);color:var(--ink);border:1px solid var(--line);
++}
++.service-card--tone-1:nth-child(odd),.service-card--tone-3:nth-child(odd),.service-card--tone-5:nth-child(odd){background:var(--surface);}
++.service-card--tone-5 h3,.service-card--tone-5 p,
++.service-card--tone-6 h3,.service-card--tone-6 p{color:var(--ink);}
++.service-card--tone-5 .service-step,.service-card--tone-6 .service-step{background:var(--accent);color:#fff;}
+ .services-cycle-note{
+   text-align:center;margin-top:20px;font-size:18px;color:var(--muted);
+ }
++/* Кому подойдёт книга — блок «ДЛЯ» из правок 05.08 */
++.audience-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:clamp(28px,4vh,44px);}
++.audience-card{background:var(--surface-2);border-radius:16px;padding:28px 24px;border-left:3px solid var(--accent);}
++.audience-card h3{font-family:var(--font-display);font-size:19px;font-weight:800;text-transform:uppercase;letter-spacing:.02em;color:var(--accent);margin-bottom:10px;}
++.audience-card p{color:var(--ink-soft);font-size:17px;line-height:1.5;margin:0;}
++@media (max-width:860px){.audience-grid{grid-template-columns:1fr;}}
++
+ #services .section-cta{margin-top:36px;}
+ 
+ /* —— Purchase —— */
+@@ -474,6 +492,7 @@ a.book-card:hover .book-card-cta,a.book-card:focus-visible .book-card-cta{opacit
+ }
+ .pack-block:first-of-type{margin-top:clamp(36px,5vh,56px);}
+ .pack-block-title{font-size:var(--h3);font-weight:800;letter-spacing:.03em;line-height:1.25;color:var(--ink);margin-bottom:8px;font-family:var(--font-display);}
++.badge-allatonce{display:inline-block;background:var(--accent);color:#fff;font-family:var(--font-display);font-weight:800;text-transform:uppercase;letter-spacing:.04em;font-size:14px;padding:6px 16px;border-radius:999px;margin-bottom:14px;}
+ .pack-block-lead{font-size:var(--body);color:var(--ink-soft);margin-bottom:24px;}
+ 
+ .pack-benefits{
+@@ -874,6 +893,8 @@ footer.section--dark .footer-value[style]{color:var(--ink-soft) !important;font-
+   .footer-socials--inline{justify-content:flex-start;}
+   #site-header .header-link{display:none;}
+   .header-meta{display:none;}
++  .header-quick{display:none;}
++  .header-socials--top{display:none;}
+   #site-header{padding:10px 14px 10px 18px;}
+   .pack-step{grid-template-columns:48px 1fr; }
+   .pack-step-media{display:none;}
+@@ -901,6 +922,7 @@ footer.section--dark .footer-value[style]{color:var(--ink-soft) !important;font-
+     border-radius:16px;padding:8px 10px 8px 14px;gap:10px;
+   }
+   #site-header .logo{font-size:14px;}
++  .header-socials--top{display:none;}
+   .header-socials a:nth-child(n+4){display:none;}
+   .chapters-grid,.services-cycle,.packs-grid,.feature-grid,.related-grid,.apt-sets,.zones-grid,.tech-grid{grid-template-columns:1fr;}
+   .hero-row{padding-top:92px;gap:16px;min-height:0;}
+diff --git a/assets/js/site.js b/assets/js/site.js
+index 3b723d0..5a8cac6 100644
+--- a/assets/js/site.js
++++ b/assets/js/site.js
+@@ -201,20 +201,30 @@
+   function initPurchaseTabs() {
+     var tabs = document.querySelectorAll('.purchase-tab');
+     if (!tabs.length) return;
++    function activate(id) {
++      var tab = document.querySelector('.purchase-tab[data-tab="' + id + '"]');
++      if (!tab) return;
++      tabs.forEach(function (t) {
++        var on = t === tab;
++        t.classList.toggle('is-active', on);
++        t.setAttribute('aria-selected', on ? 'true' : 'false');
++      });
++      document.querySelectorAll('.purchase[data-panel]').forEach(function (panel) {
++        var show = panel.getAttribute('data-panel') === id;
++        panel.classList.toggle('is-hidden', !show);
++        if (show) panel.removeAttribute('hidden');
++        else panel.setAttribute('hidden', '');
++      });
++    }
+     tabs.forEach(function (tab) {
+       tab.addEventListener('click', function () {
+-        var id = tab.getAttribute('data-tab');
+-        tabs.forEach(function (t) {
+-          var on = t === tab;
+-          t.classList.toggle('is-active', on);
+-          t.setAttribute('aria-selected', on ? 'true' : 'false');
+-        });
+-        document.querySelectorAll('.purchase[data-panel]').forEach(function (panel) {
+-          var show = panel.getAttribute('data-panel') === id;
+-          panel.classList.toggle('is-hidden', !show);
+-          if (show) panel.removeAttribute('hidden');
+-          else panel.setAttribute('hidden', '');
+-        });
++        activate(tab.getAttribute('data-tab'));
++      });
++    });
++    // Правка 07.08: кнопки-иконки в шапке ("Продать" / "Сдать") открывают нужную вкладку блока «Покупка недвижимости»
++    document.querySelectorAll('[data-tab-open]').forEach(function (link) {
++      link.addEventListener('click', function () {
++        activate(link.getAttribute('data-tab-open'));
+       });
+     });
+   }
+diff --git a/index.html b/index.html
+index dcfb9c5..e7c1d76 100644
+--- a/index.html
++++ b/index.html
+@@ -24,6 +24,13 @@
+     <a href="#lead">Контакты</a>
+   </nav>
+   <div class="header-actions">
++    <div class="header-socials header-socials--top" aria-label="Мессенджеры и соцсети">
++      <a class="header-social" href="https://max.ru/u/f9LHodD0cOKukeNHSXdxLxM9Wrr4xsGZY-c5UIShMtePbgb7JvgmuJ8rCWo" target="_blank" rel="noopener" aria-label="Max"><img src="assets/ui/social-max.svg" alt=""></a>
++      <a class="header-social" href="#" aria-label="Telegram"><img src="assets/ui/social-telegram.svg" alt=""></a>
++      <a class="header-social" href="#" aria-label="WhatsApp"><img src="assets/ui/social-whatsapp.svg" alt=""></a>
++      <a class="header-social" href="#" aria-label="Instagram"><img src="assets/ui/social-instagram.svg" alt=""></a>
++      <a class="header-social" href="#" aria-label="TikTok"><img src="assets/ui/social-tiktok.svg" alt=""></a>
++    </div>
+     <a href="tel:+79385009191" class="header-phone">+7 938 500 91 91</a>
+     <details class="header-more">
+       <summary>Ещё</summary>
+@@ -99,7 +106,7 @@
+       </div>
+       <div class="book-desc-copy">
+         <p class="section-eyebrow">Книга-инструкция</p>
+-        <h2 class="section-title">Финкод недвижимости</h2>
++        <h2 class="section-title book-title-accent">Финкод недвижимости</h2>
+         <p class="section-lead">Как накопить, сохранить и приумножить в железобетонном активе</p>
+         <div class="book-annotation">
+           <p>Книга «Финкод недвижимости» — практическое руководство по инвестированию в железобетонный актив. Автор, изучив тысячи сделок инвесторов и выявив сотни ошибок, даёт инструкцию по успешным инвестициям в недвижимость: продажа, управление, усиление доходности через деление, флиппинг, инвестиционный ремонт и упаковку, поиск объектов, клиентские впечатления и заработок за рубежом.</p>
+@@ -117,11 +124,8 @@
+     <div class="author-trust">
+       <div class="author-trust-copy">
+         <h3>Об авторе</h3>
+-        <p>Анна Гончарова — с 2016 в недвижимости, с 2018 основала инвестиционную компанию; агентства «PRO Недвижимость» и «Самолет Плюс» в России и Турции. Представительства: Аланья, Стамбул, Мерсин, Бодрум.</p>
++        <p>Анна Гончарова — с 2015 в недвижимости, с 2018 основала инвестиционную компанию; агентства «PRO Недвижимость» и «Самолет Плюс» в России и Турции. Представительства: Аланья, Стамбул, Мерсин, Бодрум. Портфель ≈110 млн ₽, средняя доходность ≈40% годовых, ИП с 2019 года.</p>
+       </div>
+-      <div class="author-stat"><strong>≈ 110 млн ₽</strong><span>портфель в России и Турции</span></div>
+-      <div class="author-stat"><strong>~40%</strong><span>средняя годовая доходность</span></div>
+-      <div class="author-stat"><strong>с 2019</strong><span>ИП · недвижимостью с 2005</span></div>
+     </div>
+   </div>
+ </section>
+@@ -207,61 +211,83 @@
+ <!-- SERVICES CYCLE -->
+ <section id="services" class="section section--half">
+   <div class="section-inner">
+-    <h2 class="section-title section-title--center">Услуги полного цикла</h2>
+-    <p class="section-lead section-lead--center">Берём на себя весь путь создания доходного объекта: от поиска квартиры до запуска в продажу или аренду — и снова к следующему заказу</p>
++    <h2 class="section-title section-title--center">Полный цикл инвестиций в недвижимость</h2>
++    <p class="section-lead section-lead--center">Без вашего участия — от аудита объекта до сдачи в аренду и следующей сделки</p>
+     <div class="services-cycle" aria-label="Цикл услуг">
+       <a class="service-card service-card--tone-1" href="uslugi/pokupka.html">
+         <span class="service-step">1</span>
+         <img src="assets/ui/service-purchase.svg" width="56" height="56" alt="">
+-        <h3>Покупка</h3>
+-        <p>Подбор объекта под инвестицию, проверка документов и сопровождение сделки</p>
++        <h3>Аудит</h3>
++        <p>Проверка юр. чистоты и ликвидности объекта за 24 часа — исключаем риск потери 100% вложений</p>
+       </a>
+       <span class="service-connector" aria-hidden="true"></span>
+-      <a class="service-card service-card--tone-2" href="uslugi/remont.html">
++      <a class="service-card service-card--tone-2" href="uslugi/pokupka.html">
+         <span class="service-step">2</span>
+-        <img src="assets/ui/service-repair.svg" width="56" height="56" alt="">
+-        <h3>Ремонт</h3>
+-        <p>В сжатые сроки, без раздувания сметы</p>
++        <img src="assets/ui/service-sale.svg" width="56" height="56" alt="">
++        <h3>Сделка</h3>
++        <p>Сопровождение до ключа, страховка рисков по ДКП</p>
+       </a>
+       <span class="service-connector" aria-hidden="true"></span>
+-      <a class="service-card service-card--tone-3" href="uslugi/upakovka.html">
++      <a class="service-card service-card--tone-3" href="uslugi/remont.html">
+         <span class="service-step">3</span>
+-        <img src="assets/ui/service-packaging.svg" width="56" height="56" alt="">
+-        <h3>Упаковка</h3>
+-        <p>Мебель и техника готовыми сетами под сдачу или продажу</p>
++        <img src="assets/ui/service-repair.svg" width="56" height="56" alt="">
++        <h3>Реновация</h3>
++        <p>Капремонт с окупаемостью за 6 месяцев аренды — повышаем стоимость объекта на 30% уже на этапе отделки</p>
+       </a>
+       <span class="service-connector" aria-hidden="true"></span>
+-      <a class="service-card service-card--tone-4" href="uslugi/prodazha.html">
++      <a class="service-card service-card--tone-4" href="uslugi/upakovka.html">
+         <span class="service-step">4</span>
+-        <img src="assets/ui/service-sale.svg" width="56" height="56" alt="">
+-        <h3>Продажа</h3>
+-        <p>Хоумстейджинг, оценка, быстрый выход из проекта</p>
++        <img src="assets/ui/service-packaging.svg" width="56" height="56" alt="">
++        <h3>Наполнение</h3>
++        <p>Готовый дизайн-проект и мебель под ключ — без переплат</p>
+       </a>
+       <span class="service-connector" aria-hidden="true"></span>
+-      <a class="service-card service-card--tone-5" href="uslugi/arenda.html">
++      <a class="service-card service-card--tone-5" href="uslugi/prodazha.html">
+         <span class="service-step">5</span>
+-        <img src="assets/ui/service-rent.svg" width="56" height="56" alt="">
+-        <h3>Аренда</h3>
+-        <p>Поиск арендаторов и управление объектом без вашего участия</p>
++        <img src="assets/ui/service-cleaning.svg" width="56" height="56" alt="">
++        <h3>Маркетинг</h3>
++        <p>Профессиональные фото, 3D-туры и вывод объекта на топ-площадки</p>
+       </a>
+       <span class="service-connector" aria-hidden="true"></span>
+-      <a class="service-card service-card--tone-6" href="#lead" data-lead="Клининг">
++      <a class="service-card service-card--tone-6" href="uslugi/arenda.html">
+         <span class="service-step">6</span>
+-        <img src="assets/ui/service-cleaning.svg" width="56" height="56" alt="">
+-        <h3>Клининг</h3>
+-        <p>Подготовка объекта к показу, заезду или следующей сдаче</p>
++        <img src="assets/ui/service-rent.svg" width="56" height="56" alt="">
++        <h3>Управление</h3>
++        <p>Поиск арендаторов и полное юридическое сопровождение</p>
+       </a>
+     </div>
+-    <p class="services-cycle-note">Цикл замыкается: после клининга объект готов к новой аренде, продаже или следующей покупке</p>
++    <p class="services-cycle-note">Цикл замыкается: после управления объект готов к новой сделке, ремонту или следующей покупке</p>
+     <div class="section-cta">
+-      <a href="#lead" class="btn btn-primary" data-lead="Заявка на услугу">
+-        <span class="fw5">Оставить заявку на услугу</span>
++      <a href="#lead" class="btn btn-primary" data-lead="Рассчитать доходность объекта">
++        <span class="fw5">Рассчитать доходность объекта</span>
+         <span class="btn-icon"><img src="assets/ui/arrow-up-right.svg" alt=""></span>
+       </a>
+     </div>
+   </div>
+ </section>
+ 
++<!-- AUDIENCE SEGMENTS — блок «ДЛЯ» из правок 05.08 -->
++<section id="audience" class="section section--half">
++  <div class="section-inner">
++    <h2 class="section-title section-title--center">Кому подойдёт книга</h2>
++    <p class="section-lead section-lead--center">Как получить максимальный результат на объектах недвижимости</p>
++    <div class="audience-grid">
++      <div class="audience-card">
++        <h3>Инструкции, с чего начать</h3>
++        <p>Для тех, кто интересуется недвижимостью и хочет купить объект недвижимости для себя и заработка.</p>
++      </div>
++      <div class="audience-card">
++        <h3>Инвестиции с минимальными вложениями</h3>
++        <p>Для инвесторов и предпринимателей, которые в поиске надёжных и прибыльных инструментов инвестиций.</p>
++      </div>
++      <div class="audience-card">
++        <h3>Дополнительный заработок</h3>
++        <p>Для тех, кто готов потрудиться в новом деле и найти доп. источник дохода от 200 000 ₽ в год.</p>
++      </div>
++    </div>
++  </div>
++</section>
++
+ <!-- PURCHASE (raised after services) -->
+ <section id="purchase" class="section">
+   <div class="section-inner">
+@@ -316,6 +342,7 @@
+ <!-- PACKAGING FULL SECTION -->
+ <section id="sets" class="section packaging-section">
+   <div class="section-inner">
++    <div style="text-align:center;"><span class="badge-allatonce">Всё и сразу</span></div>
+     <h2 class="section-title section-title--center">Упаковка</h2>
+     <p class="section-lead section-lead--center">Мебель, техника и декор — от сетов по типам квартир до готовых пакетов под сдачу. Всё и сразу, без скрытия за кликами.</p>
+ 
